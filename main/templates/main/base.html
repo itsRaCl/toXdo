@@ -1,0 +1,46 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>toXdo : collaborative todo lists</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	</head>	
+	<body>
+		<header class="p-3 text-bg-dark">
+			<div class="container">
+				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+					<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+						toXdo
+					</a>
+
+					<ul class="nav col-12 col-lg-auto me-lg-auto justify-content-center mb-md-0">
+						<li><a href="/" class="nav-link ps-4 pe-2 text-secondary">Home</a></li>
+						<li><a href="/list/create" class="nav-link px-2 text-secondary">Create List</a></li>
+						<li><a href="/invites" class="nav-link px-2 text-secondary">Team Invites</a></li>
+					</ul>
+
+
+					<div class="text-end">
+						{% if request.user.is_authenticated %}
+						<a href="/auth/logout" class="btn btn-warning">Logout</a>
+						{%else%}
+						<a href="/auth/login" class="btn btn-outline-light me-2">Login</a>
+						<a href="/auth/register" class="btn btn-warning">Sign-up</a>
+						{%endif%}
+					</div>
+				</div>
+			</div>
+		</header>
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-{% if message.tags == 'success' %}success{%else%}danger{%endif%} alert-dismissible fade show" role="alert">
+			{{message}} 
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		{%endfor%}
+		{%endif%}
+		{%block content%}
+		{%endblock%}
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	</body>
+</html>

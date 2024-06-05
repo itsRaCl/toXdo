@@ -1,0 +1,24 @@
+{%extends "main/base.html" %}
+{%block content%}
+<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+	<h1> Members for {{list.name}}</h1>
+	<div class="container-fluid py-5">
+		{% for member in members %}
+		<div class="card w-75 mb-3">
+			<div class="card-body">
+				<h5 class="card-title">{{member.username}}</h5>
+			</div>
+				<ul class="list-group list-group-flush">
+					{% for item in member.items %}
+					<li class="list-group-item">Title: {{item.title}} | Description : {{item.description}}</li>
+					{% endfor %}
+				</ul>
+			<div class="card-body">
+				<a href="{% url "main:revoke_access" list.id member.username %}" class="card-link">Revoke Access</a>
+			</div>
+		</div>
+		{%endfor%}
+	</div>
+</div>
+
+{%endblock%}

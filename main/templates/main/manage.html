@@ -1,0 +1,41 @@
+{%extends "main/base.html" %}
+{%block content%}
+<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+	<h1> Manage {{list.name}}</h1>
+	{% if owner %}
+	<a href="/list/{{list.id}}/invite_members" class="btn btn-warning">Invite Users</a>
+	<a href="/list/{{list.id}}/members" class="btn btn-primary">Manage Members</a>
+	{%endif%}
+	<a href="/list/{{list.id}}/create_item" class="btn btn-success">Create Item</a>
+	<form method="post">
+		{% csrf_token %}
+		<div class="container-fluid py-5">
+			{% for item in list.items.all %}
+			<div class="card w-75 my-5">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">Title: {{item.title}}</li>
+					<li class="list-group-item">Description : {{item.description}}</li>
+					<li class="list-group-item">Created By: {{item.created_by.username}} | Priority: {% if item.priority is "H" %}High{%elif item.priority is "M"%} Medium {%else%} Low {%endif%} </li>
+				</ul>
+				<div class="card-footer">
+					<div class="row g-3 align-items-center">
+						<div class="col-auto">
+							<label for="status_select_{{item.id}}" class="col-form-label">Status : </label>
+						</div>
+						<div class="col-auto">
+							<select class="form-select" name="status_select_{{item.id}}">
+								<option value="P" {% if item.status == "P" %}selected="" {%endif%} >Pending</option>
+								<option value="I" {% if item.status == "I" %}selected="" {%endif%} >In-Progress</option>
+								<option value="C" {% if item.status == "C" %}selected="" {%endif%} >Completed</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			{%endfor%}
+		</div>
+		<button type="submit" class="btn btn-primary">Update</button>
+	</form>
+</div>
+
+{%endblock%}

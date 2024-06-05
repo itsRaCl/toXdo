@@ -1,0 +1,21 @@
+{%extends "main/base.html" %}
+{%block content%}
+<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+	<h1> Your Invites</h1>
+	<div class="container-fluid py-5">
+		{% for invite in invites %}
+		<div class="card w-75 mb-3">
+			<div class="card-body">
+				<h5 class="card-title">{{invite.todo_list.name}}</h5>
+				<h6 class="card-subtitle">Owner:  {{invite.todo_list.owner.username}}</h6>
+			</div>
+			<div class="card-body">
+				<a href="{% url "main:accept_invite" invite.id %}" class="card-link">Accept</a>
+				<a href="{% url "main:decline_invite" invite.id %}" class="card-link">Decline</a>
+			</div>
+		</div>
+		{%endfor%}
+	</div>
+</div>
+
+{%endblock%}
